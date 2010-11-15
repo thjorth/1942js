@@ -6,6 +6,10 @@ window.Game = {
 		dTime: 1,
 		fps: 0
 	},
+	dimensions: {
+		w: 100,
+		h: 100
+	},
 	keys: {
 		left: false,
 		right: false,
@@ -45,9 +49,20 @@ Game.init = function() {
 	Game.viewport = document.getElementById("viewport");
 	Game.overlay = document.getElementById("overlay");
 	
+	Game.dimensions.w = Game.viewport.clientWidth;
+	Game.dimensions.h = Game.viewport.clientHeight;
+	Game.overlay.style.width = Game.dimensions.w + "px";
+	
 	// setup the two screen buffers
 	Game.activeBuf = document.getElementById("buffer1");
 	Game.visibleBuf = document.getElementById("buffer2");
+	
+	// now configure the dimensions of the buffers
+	Game.activeBuf.width = Game.visibleBuf.width = Game.dimensions.w;
+	Game.activeBuf.height = Game.visibleBuf.height = Game.dimensions.h;
+	Game.activeBuf.style.width = Game.visibleBuf.style.width = Game.dimensions.w + "px";
+	Game.activeBuf.style.height = Game.visibleBuf.style.height = Game.dimensions.h + "px";
+	
 	Game.activeBuf._canvas = Game.activeBuf.getContext("2d");
 	Game.visibleBuf._canvas = Game.visibleBuf.getContext("2d");
 }
@@ -154,12 +169,12 @@ Game.blit = function() {
 	// clear the active (drawing) buffer
 	//Game.canvas.clearRect(0, 0, 640, 480);
 	Game.canvas.fillStyle = "#55f";
-	Game.canvas.fillRect(0, 0, 640, 480);
+	Game.canvas.fillRect(0, 0, Game.dimensions.w, Game.dimensions.h);
 }
 Game.drawBorder = function() {
 	Game.canvas.strokeStyle = "#000";
 	Game.canvas.lineWidth = 4;
-	Game.canvas.strokeRect(0, 0, 640, 480);
+	Game.canvas.strokeRect(0, 0, Game.dimensions.w, Game.dimensions.h);
 }
 Game.drawPlayer = function() {
 	Game.canvas.drawImage(Game.sprites.player, 0, 0, Game.player.w, Game.player.h, Math.round(Game.player.x) - Game.player.wh, Math.round(Game.player.y) - Game.player.hh, Game.player.w, Game.player.h);
