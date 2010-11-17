@@ -91,51 +91,73 @@ Game.stop = function() {
 }
 Game.keydown = function(e) {
 	//console.log("d: " + e.keyCode);
+	var retval = true;
 	switch (e.keyCode)
 	{
 		case 37:
 			Game.keys.left = true;
+			retval = false;
 			break;
 		case 38:
 			Game.keys.up = true;
+			retval = false;
 			break;
 		case 39:
 			Game.keys.right = true;
+			retval = false;
 			break;
 		case 40:
 			Game.keys.down = true;
+			retval = false;
 			break;
 		case 17:
 			Game.keys.fire1 = true;
+			retval = false;
 			break;
 		case 16:
 			Game.keys.fire2 = true;
+			retval = false;
 			break;
 	}
+	if (!retval) {
+		e.stopPropagation();
+	}
+	return retval;
 }
 Game.keyup = function(e) {
 	//console.log("u: " + e.keyCode);
+	var retval = true;
 	switch (e.keyCode)
 	{
 		case 37:
 			Game.keys.left = false;
+			retval = false;
 			break;
 		case 38:
 			Game.keys.up = false;
+			retval = false;
 			break;
 		case 39:
 			Game.keys.right = false;
+			retval = false;
 			break;
 		case 40:
 			Game.keys.down = false;
+			retval = false;
 			break;
 		case 17:
 			Game.keys.fire1 = false;
+			retval = false;
 			break;
 		case 16:
 			Game.keys.fire2 = false;
+			retval = false;
 			break;
 	}
+	if (!retval) {
+		e.stopPropagation();
+	}
+	return retval;
 }
 Game.handleInput = function() {
 	Game.player.vx = 0;
@@ -148,10 +170,15 @@ Game.handleInput = function() {
 Game.movePlayer = function() {
 	Game.player.x += Game.player.vx * (Game.state.dTime / 1000);
 	Game.player.y += Game.player.vy * (Game.state.dTime / 1000);
-	if (Game.player.vx != 0 || Game.player.vy != 0)
-	{
-		//console.log("x = " + Game.player.x + ", y = " + Game.player.y);
-	}
+	//console.log(Game.dimensions.w);
+	if (Game.player.x + Game.player.wh > Game.dimensions.w) 
+		Game.player.x = Game.dimensions.w - Game.player.wh;
+	if (Game.player.x - Game.player.wh < 0) 
+		Game.player.x = Game.player.wh;
+	if (Game.player.y + Game.player.hh > Game.dimensions.h) 
+		Game.player.y = Game.dimensions.h - Game.player.hh;
+	if (Game.player.y - Game.player.hh < 0) 
+		Game.player.y = Game.player.hh;
 }
 Game.displayFps = function() {
 	Game.state.fps = ((Game.state.fps * 40) + 1000 / Game.state.dTime) / 41;
@@ -179,6 +206,10 @@ Game.drawBorder = function() {
 Game.drawPlayer = function() {
 	Game.canvas.drawImage(Game.sprites.player, 0, 0, Game.player.w, Game.player.h, Math.round(Game.player.x) - Game.player.wh, Math.round(Game.player.y) - Game.player.hh, Game.player.w, Game.player.h);
 }
+Game.render = function() {
+	Game.drawPlayer();
+	Game.drawBorder();
+}
 Game.tick = function() {
 	var now = new Date().getTime();
 	Game.state.dTime = now - Game.state.lastTick;
@@ -188,8 +219,7 @@ Game.tick = function() {
 	
 	Game.displayFps();
 	
-	Game.drawBorder();
-	Game.drawPlayer();
+	Game.render();
 	
 	// switch the buffers around
 	Game.blit();
