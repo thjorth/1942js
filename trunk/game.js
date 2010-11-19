@@ -4,6 +4,7 @@ window.Game = {
 		running: false,
 		lastTick: 1,
 		dTime: 1,
+		now: new Date().getTime(),		// current time
 		fps: 0
 	},
 	dimensions: {
@@ -19,23 +20,27 @@ window.Game = {
 		fire2: false
 	},
 	player: {
-		vx: 0.0,				// player's horiozontal velocity
-		vy: 0.0,				// player's vertical velocity
-		x: 320,					// player's x-coordinate
-		y: 300,					// player's y-coordinate
-		w: 46,					// player's width
-		wh: 23,					// half of player's width
-		h: 32,					// player's height
-		hh: 16,					// half of player's height
-		mvh: 250,				// player's max horizontal speed in px/s
-		mvv: 250				// player's max vertical speed in px/s
+		vx: 0.0,						// player's horiozontal velocity
+		vy: 0.0,						// player's vertical velocity
+		x: 320,							// player's x-coordinate
+		y: 300,							// player's y-coordinate
+		w: 46,							// player's width
+		wh: 23,							// half of player's width
+		h: 32,							// player's height
+		hh: 16,							// half of player's height
+		mvh: 250,						// player's max horizontal speed in px/s
+		mvv: 250,						// player's max vertical speed in px/s
+		lst: new Date().getTime(),		// last shot timestamp
+		afp: 300,						// autofire pause - time between autofired shots
+		mfp: 100,						// manuel fire pause - lowest possible time between manual shots.
+		cfp: 300						// current fire pause - lowest possible time between shots
 	},
 	viewport: null,
 	activeBuf: null,
 	visibleBuf: null,
 	canvas: null,				// this will always point to the canvas' drawing context where all drawing operations should be performed
 	overlay: null
-};
+}
 Game.vector = { 
 	x: 0,
 	y: 0
@@ -147,6 +152,7 @@ Game.keyup = function(e) {
 			break;
 		case 17:
 			Game.keys.fire1 = false;
+			Game.player.cfp = Game.player.mfp;
 			retval = false;
 			break;
 		case 16:
@@ -206,16 +212,42 @@ Game.drawBorder = function() {
 Game.drawPlayer = function() {
 	Game.canvas.drawImage(Game.sprites.player, 0, 0, Game.player.w, Game.player.h, Math.round(Game.player.x) - Game.player.wh, Math.round(Game.player.y) - Game.player.hh, Game.player.w, Game.player.h);
 }
+Game.firePlayer = function() {
+	if (Game.keys.fire1) {
+		// if longer time than the player's current fire pause has passed since last shot fire a new one
+		if (Game.state.now - Game.player.lst > Game.player.cfp) {
+			// reset the player's current fire pause to the auto fire pause - this can be reset to the manual fire pause by lifting the fire key
+			Game.player.cfp = Game.player.afp;
+			// record the current time as the last shot timestamp (lst)
+			Game.player.lst = Game.state.now;
+			
+			// now spawn the new shot
+			var shot = Game.queue.newObject("playerBullet");
+			shot.x = Game.player.x - 10;
+			shot.y = Game.player.y - 10;
+			
+			shot = Game.queue.newObject("playerBullet");
+			shot.x = Game.player.x + 10;
+			shot.y = Game.player.y - 10;
+		}
+	}
+}
 Game.render = function() {
 	Game.drawPlayer();
+	Game.queue.draw();
 	Game.drawBorder();
 }
 Game.tick = function() {
 	var now = new Date().getTime();
+	Game.state.now = now;
 	Game.state.dTime = now - Game.state.lastTick;
 
 	Game.handleInput();
 	Game.movePlayer();
+	Game.firePlayer();
+	
+	// move all non-player objects
+	Game.queue.move(Game.state.dTime);
 	
 	Game.displayFps();
 	
