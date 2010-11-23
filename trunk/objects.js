@@ -51,7 +51,13 @@ Game.PlayerBullet.prototype.draw = function() {
 	//Game.canvas.beginPath();
 	//Game.canvas.arc(this.x, this.y, 2, 0, 0, true);
 	//Game.canvas.fill();
-	Game.canvas.fillRect(this.x - this.wh, this.y - this.hh, this.w, this.h);
+	try
+	{
+		Game.canvas.fillRect(this.x - this.wh, this.y - this.hh, this.w, this.h);
+	} catch(err) {
+		this.valid = false;
+		debugger;
+	}
 	Game.canvas.restore();
 }
 Game.PlayerBullet.prototype.updateValid = function() {

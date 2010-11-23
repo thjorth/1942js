@@ -33,6 +33,9 @@ Game.queue = {
 			case "playerBullet":
 				obj = new Game.PlayerBullet();
 				break;
+			case "player" :
+				obj = new Game.Player();
+				break;
 			default:
 				obj = new Game.Object();
 				break;
