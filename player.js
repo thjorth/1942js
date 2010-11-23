@@ -71,5 +71,17 @@ Game.Player.prototype.draw = function() {
 	Game.canvas.drawImage(Game.sprites.player, 0, 0, this.w, this.h, Math.round(this.x) - this.wh, Math.round(this.y) - this.hh, this.w, this.h);
 }
 
+/*
+// RemotePlayer to be updated from network. Apart from that coordinates are reversed
+Game.RemotePlayer = function() {
+
+}
+Game.RemotePlayer.prototype = new Game.Player();
+Game.RemotePlayer.prototype.constructor = Game.RemotePlayer;
+
+
+*/
+
+
 
 
