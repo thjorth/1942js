@@ -59,7 +59,9 @@ Game.init = function() {
 	Game.activeBuf._canvas = Game.activeBuf.getContext("2d");
 	Game.visibleBuf._canvas = Game.visibleBuf.getContext("2d");
 }
-Game.start = function() {
+Game.start = function () {
+
+    
 	if (Game.state.running) return;
 	
 	// setup state and other important stuff
@@ -207,11 +209,16 @@ Game.tick = function() {
 }
 
 // load the sprites
-window.addEventListener('load', function() {
-	Game.init();
-	Game.initSprites();
-	document.getElementById('btnStart').addEventListener('click', Game.start, false);
-	document.getElementById('btnStop').addEventListener('click', Game.stop, false);
-	
+window.addEventListener('load', function () {
+    Game.init();
+    Game.initSprites();
+    document.getElementById('btnStart').addEventListener('click', Game.start, false);
+    document.getElementById('btnStop').addEventListener('click', Game.stop, false);
+
+    document.getElementById('start').addEventListener('ended', function () {
+        document.getElementById('title').play();
+    }, false);
+
+    document.getElementById('start').play();
 }, false);
 
