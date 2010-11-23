@@ -214,7 +214,22 @@ window.addEventListener('load', function () {
     Game.initSprites();
     document.getElementById('btnStart').addEventListener('click', Game.start, false);
     document.getElementById('btnStop').addEventListener('click', Game.stop, false);
+    document.getElementById('btnMute').addEventListener('click', function () {
+        var title = document.getElementById('title');
+        if (title.paused)
+            title.play();
+        else
+            title.pause();
+        document.getElementById('start').pause();
+    }, false);
 
+    // loop title
+    document.getElementById('title').addEventListener('ended', function () {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+
+    // play title, when start ends
     document.getElementById('start').addEventListener('ended', function () {
         document.getElementById('title').play();
     }, false);
