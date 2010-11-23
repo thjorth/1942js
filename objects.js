@@ -61,30 +61,6 @@ Game.PlayerBullet.prototype.updateValid = function() {
 		this.valid = false;
 	}
 }
-/*
-Game.Object = {						   // Do not instantiate directly - get one from the queue
-	x: -100,
-	y: -100,
-	w: 2,
-	h: 2,
-	wh: 1,
-	hh: 1,
-	vx: 0,
-	vy: 0,
-	bt: 0,									// born timestamp
-	valid: true,							// if not valid the sprite will not be processed.
-	gType: "sprite",						// graphics type "sprite" or "function"
-	sprite: "url",							// url to sprite image
-	dFunc: null,							// function(x, y) { .... draw object .... }
-	mType: "vector",						// movement type "vector" or "function"
-	mFunc: null,							// movement function(dt)
-	updValid: null,							// this function should set the valid attribute if the object is no longer to be maintained - ie. it has left the screen
-	init: function() {
-		this.valid = true;
-		this.bt = new Date().getTime();
-	}
-}
-*/
 Game.queue = {
 	objs: [],
 	move: function(dt) {
