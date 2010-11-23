@@ -1,0 +1,3 @@
+#viewport			{ width: 640px; height: 480px; position: relative; }
+#viewport canvas		{ position: absolute; top: 0; left: 0; visibility: hidden; }
+#overlay			{ position: absolute; top: 0; left: 0; padding: 3px; }
