@@ -22,6 +22,7 @@
 
        <script type="text/javascript">
         var socket = new io.Socket("10.30.2.158", {port:8080});
+    
         socket.connect();
         socket.on('message', function (obj) {
           console.log('got message');
@@ -35,6 +36,16 @@
              }, false);
 
     </script>   
+
+    <audio id="start" preload="auto">
+        <source src="snd/start.ogg" type="audio/ogg" />
+        <source src="snd/start.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="title" preload="auto" loop="loop">
+        <source src="snd/title.ogg" type="audio/ogg" />
+        <source src="snd/title.mp3" type="audio/mpeg" />
+    </audio>
 
 </body>
 </html>
