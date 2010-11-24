@@ -16,28 +16,7 @@
           <input type="button" id="btnStart" value="Start" />
           <input type="button" id="btnStop" value="Stop"/>
           <input type="button" id="btnMute" value="Mute"/>
-          <input type="button" id="btnSendPos" value="Pos"/>
-          <input type="text" id="posText"/>
 	</div>
-        <!--<script type="text/javascript" src="http://10.30.2.158:8080/socket.io/socket.io.js"></script>-->
-
-<!--       <script type="text/javascript">
-        var socket = new io.Socket("10.30.2.158", {port:8080});
-    
-        socket.connect();
-        socket.on('message', function (obj) {
-          console.log('got message');
-          if (obj.message) {
-           document.getElementById('posText').value=(obj.message[1]); 
-          }
-        });
-        document.getElementById('btnSendPos').addEventListener('click', 
-             function() {
-               socket.send(document.getElementById('posText').value);
-             }, false);
-
-    </script>   
--->
     <audio id="start" preload="auto">
         <source src="snd/start.ogg" type="audio/ogg" />
         <source src="snd/start.mp3" type="audio/mpeg" />
