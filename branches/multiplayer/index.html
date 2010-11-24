@@ -1,0 +1,71 @@
+<html>
+<head>
+	<link rel="stylesheet" href="game.css"/>
+	<script type="text/javascript" src="game.js"></script>
+	<script type="text/javascript" src="queue.js"></script>
+	<script type="text/javascript" src="objects.js"></script>
+	<script type="text/javascript" src="player.js"></script>
+</head>
+<body>
+	<div id="viewport">
+		<canvas id="buffer1"></canvas>
+		<canvas id="buffer2"></canvas>
+		<div id="overlay"></div>
+	</div>
+	<div>
+          <input type="button" id="btnStart" value="Start" />
+          <input type="button" id="btnStop" value="Stop"/>
+          <input type="button" id="btnMute" value="Mute"/>
+          <input type="button" id="btnSendPos" value="Pos"/>
+          <input type="text" id="posText"/>
+	</div>
+        <!--<script type="text/javascript" src="http://10.30.2.158:8080/socket.io/socket.io.js"></script>-->
+
+<!--       <script type="text/javascript">
+        var socket = new io.Socket("10.30.2.158", {port:8080});
+    
+        socket.connect();
+        socket.on('message', function (obj) {
+          console.log('got message');
+          if (obj.message) {
+           document.getElementById('posText').value=(obj.message[1]); 
+          }
+        });
+        document.getElementById('btnSendPos').addEventListener('click', 
+             function() {
+               socket.send(document.getElementById('posText').value);
+             }, false);
+
+    </script>   
+-->
+    <audio id="start" preload="auto">
+        <source src="snd/start.ogg" type="audio/ogg" />
+        <source src="snd/start.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="title" preload="auto">
+        <source src="snd/title.ogg" type="audio/ogg" />
+        <source src="snd/title.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="fireChannel1" preload="auto">
+        <source src="snd/fire1.ogg" type="audio/ogg" />
+        <source src="snd/fire1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="fireChannel2" preload="auto">
+        <source src="snd/fire1.ogg" type="audio/ogg" />
+        <source src="snd/fire1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="fireChannel3" preload="auto">
+        <source src="snd/fire1.ogg" type="audio/ogg" />
+        <source src="snd/fire1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <audio id="fireChannel4" preload="auto">
+        <source src="snd/fire1.ogg" type="audio/ogg" />
+        <source src="snd/fire1.mp3" type="audio/mpeg" />
+    </audio>
+</body>
+</html>
