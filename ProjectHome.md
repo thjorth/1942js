@@ -1,0 +1,1 @@
+This is a project dreamt up to see if it's possible to implement simple arcade games using javascript and canvas.
